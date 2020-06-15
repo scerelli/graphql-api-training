@@ -60,6 +60,13 @@ const typeDefs = gql`
     curriculum: String
   }
 
+  type Discount {
+    id: ID!
+    code: String
+    discountPercentage: Int
+    description: String
+  }
+
   type Query {
     trainings: [Training]
     discounts: [Discount]
@@ -78,11 +85,9 @@ const typeDefs = gql`
 // schema.  We'll retrieve books from the "books" array above.
 const resolvers = {
   Query: {
-    trainings: () => trainingMockData,
+    trainings: async () => await fetchTrainings(),
     discounts: () => discountMockData
   },
-
-
 };
 
 // In the most basic sense, the ApolloServer can be started
