@@ -62,7 +62,16 @@ const typeDefs = gql`
 
   type Query {
     trainings: [Training]
+    discounts: [Discount]
   }
+
+  type Discount {
+    code: String
+    id: String
+    discountPercentage: Int
+  }
+
+
 `;
 
 // Resolvers define the technique for fetching the types in the
@@ -70,7 +79,10 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     trainings: () => trainingMockData,
+    discounts: () => discountMockData
   },
+
+
 };
 
 // In the most basic sense, the ApolloServer can be started
