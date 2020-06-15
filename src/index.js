@@ -54,31 +54,24 @@ const discountMockData = [
 // which ways the data can be fetched from the GraphQL server.
 const typeDefs = gql`
   type Training {
-    title: String
+    upperCaseTitle: String!
+    title: String!
     id: ID!
-    objectives: String
+    objectives: String!
     curriculum: String
   }
 
   type Discount {
     id: ID!
-    code: String
-    discountPercentage: Int
+    code: String!
+    discountPercentage: Int!
     description: String
   }
 
   type Query {
-    trainings: [Training]
-    discounts: [Discount]
+    trainings: [Training!]
+    discounts: [Discount!]
   }
-
-  type Discount {
-    code: String
-    id: String
-    discountPercentage: Int
-  }
-
-
 `;
 
 // Resolvers define the technique for fetching the types in the
@@ -86,8 +79,11 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     trainings: async () => await fetchTrainings(),
-    discounts: () => discountMockData
+    discounts: async () => await fetchDiscounts()
   },
+  Training: {
+    upperCaseTitle: (parent) => parent.title.toUpperCase()
+  }
 };
 
 // In the most basic sense, the ApolloServer can be started
